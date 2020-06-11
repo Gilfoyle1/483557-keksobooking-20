@@ -1,6 +1,8 @@
 'use strict';
 
 var COUNT = 8;
+var SIZE_PIN_X = 50 / 2;
+var SIZE_PIN_Y = 70;
 
 var types = ['palace', 'flat', 'house', 'bungalo'];
 var times = ['12: 00', '13: 00', '14: 00'];
@@ -21,8 +23,17 @@ var getRandomInt = function (min, max) {
 };
 
 // функция создания массива случайной длины
-var shuffleArray = function (array) {
-  return array;
+var shuffleArray = function (a) {
+  var j;
+  var x;
+  var i;
+  for (i = a.length - 1; i > 0; i--) {
+    j = Math.floor(Math.random() * (i + 1));
+    x = a[i];
+    a[i] = a[j];
+    a[j] = x;
+  }
+  return a;
 };
 
 var housingOptions = [];
@@ -32,7 +43,7 @@ var addHousingOptions = function () {
   for (var i = 0; i < COUNT; i++) {
     housingOptions.push({
       'author': {
-        'avatar': 'img/avatars/user' + ('0' + (i + 1)) + '.png'
+        'avatar': 'img/avatars/user0' + (i + 1) + '.png'
       },
       'offer': {
         'title': 'Идеальный вариант на выходные',
@@ -43,12 +54,12 @@ var addHousingOptions = function () {
         'guests': getRandomInt(1, 8),
         'checkin': times[getRandomInt(0, times.length - 1)],
         'checkout': times[getRandomInt(0, times.length - 1)],
-        'features': shuffleArray(options).slice(0, getRandomInt(0, options.length - 1)),
+        'features': shuffleArray(options).slice(0, getRandomInt(0, options.length)),
         'description': 'Расположен в районе Тайто в Токио, в 200 метрах от храма Ичогаока-Хатиман, в 300 метрах от павильона и конференц-зала Hulic и в 500 метрах от храма Канаами-Инари.',
-        'photos': shuffleArray(photos).slice(0, getRandomInt(1, photos.length - 1)),
+        'photos': shuffleArray(photos).slice(0, getRandomInt(1, photos.length)),
       },
       'location': {
-        'x': getRandomInt(0, document.querySelector('.map').offsetWidth),
+        'x': getRandomInt(0, map.offsetWidth),
         'y': getRandomInt(130, 630)
       }
     });
@@ -57,23 +68,26 @@ var addHousingOptions = function () {
 addHousingOptions();
 
 // создаем функцию клонирования
-
 var renderPin = function (pin) {
   var clonePin = pinTemplate.cloneNode(true);
-  clonePin.style.left = pin.location.x + 'px';
-  clonePin.style.top = pin.location.y + 'px';
-  pinTemplate.querySelector('img').src = pin.author.avatar;
-  pinTemplate.querySelector('img').alt = pin.offer.title;
+  clonePin.style.left = pin.location.x - SIZE_PIN_X + 'px';
+  clonePin.style.top = pin.location.y - SIZE_PIN_Y + 'px';
+
+  var img = clonePin.querySelector('img');
+  img.src = pin.author.avatar;
+  img.alt = pin.offer.title;
 
   return clonePin;
 };
 
-
 // создаем цикл добавления пинов
-var fragment = document.createDocumentFragment();
-for (var i = 0; i < housingOptions.length; i++) {
-  fragment.appendChild(renderPin(housingOptions[i]));
-}
+var renderPins = function () {
+  var fragment = document.createDocumentFragment();
+  for (var i = 0; i < housingOptions.length; i++) {
+    fragment.appendChild(renderPin(housingOptions[i]));
+  }
 
-// добавляем фрагмент в элемент страницы
-pinsBlock.appendChild(fragment);
+  // добавляем фрагмент в элемент страницы
+  pinsBlock.appendChild(fragment);
+};
+renderPins();
