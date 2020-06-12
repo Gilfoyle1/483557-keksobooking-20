@@ -4,8 +4,8 @@ var COUNT = 8;
 var SIZE_PIN_X = 50 / 2;
 var SIZE_PIN_Y = 70;
 
-var types = ['palace', 'flat', 'house', 'bungalo'];
-var times = ['12: 00', '13: 00', '14: 00'];
+var type = ['palace', 'flat', 'house', 'bungalo'];
+var times = ['12:00', '13:00', '14:00'];
 var options = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var photos = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 
@@ -38,7 +38,7 @@ var shuffleArray = function (a) {
 
 var housingOptions = [];
 
-// функция с циклом, который перебирает объект с пинами и добавляет его в массив housingOptions
+// функция с циклом, который перебирает объект объявлений и добавляет его в массив housingOptions
 var addHousingOptions = function () {
   for (var i = 0; i < COUNT; i++) {
     housingOptions.push({
@@ -49,7 +49,7 @@ var addHousingOptions = function () {
         'title': 'Идеальный вариант на выходные',
         'address': getRandomInt(1, 600) + ', ' + getRandomInt(1, 300),
         'price': getRandomInt(1000, 50000),
-        'type': types[getRandomInt(0, types.length - 1)],
+        'type': type[getRandomInt(0, type.length - 1)],
         'rooms': getRandomInt(1, 5),
         'guests': getRandomInt(1, 8),
         'checkin': times[getRandomInt(0, times.length - 1)],
@@ -91,3 +91,48 @@ var renderPins = function () {
   pinsBlock.appendChild(fragment);
 };
 renderPins();
+
+/* -----задание 2------ */
+
+var types = {
+  palace: {
+    ru: 'Дворец'
+  },
+  flat: {
+    ru: 'Квартира'
+  },
+  house: {
+    ru: 'Дом'
+  },
+  bungalo: {
+    ru: 'Бунгало'
+  },
+};
+
+var filtersContainer = document.querySelector('.map__filters-container');
+
+var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
+
+// Функция клонирования карточки объявления
+var getCard = function (value) {
+  var cardElement = cardTemplate.cloneNode(true);
+
+  cardElement.querySelector('.popup__title').textContent = value.offer.title;
+  cardElement.querySelector('.popup__text--address').textContent = value.offer.address;
+  cardElement.querySelector('.popup__text--price').textContent = value.offer.price + '₽/ночь';
+  cardElement.querySelector('.offer.type').textContent = types[value.type].ru;
+  cardElement.querySelector('.popup__text--capacity').textContent = value.offer.rooms + ' комнаты для ' + value.offer.guests + ' гостей'; // решить как изменять склонения
+  cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + value.offer.checkin + ', выезд до ' + value.offer.checkout;
+  cardElement.querySelector('.offer.description').textContent = value.offer.description;
+
+  var featureElement = cardElement.querySelectorAll('.popup__features');
+
+  for (var i = 0; i < value.offer.features.length; i++) {
+
+    featureElement.textContent = value.offer.features[i];
+  }
+
+  return cardElement;
+};
+
+map.insertBefore(getCard(housingOptions[0]), filtersContainer);
