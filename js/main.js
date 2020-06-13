@@ -112,17 +112,35 @@ var typesoOffers = {
 var filtersContainer = document.querySelector('.map__filters-container');
 var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
 
+// функция склонения
+var getNoun = function (number, one, two, five) {
+  number = Math.abs(number);
+  number %= 100;
+  if (number >= 5 && number <= 20) {
+    return number + five;
+  }
+  number %= 10;
+  if (number === 1) {
+    return number + one;
+  }
+  if (number >= 2 && number <= 4) {
+    return number + two;
+  }
+  return number + five;
+};
+
 
 // Функция карточки объявления
 var getCard = function (value) {
   var cardElement = cardTemplate.cloneNode(true);
+
   var photoElement = cardElement.querySelector('.popup__photos');
 
   cardElement.querySelector('.popup__title').textContent = value.offer.title;
   cardElement.querySelector('.popup__text--address').textContent = value.offer.address;
   cardElement.querySelector('.popup__text--price').textContent = value.offer.price + ' ₽/ночь';
   cardElement.querySelector('.popup__type').textContent = typesoOffers[value.offer.type].ru;
-  cardElement.querySelector('.popup__text--capacity').textContent = value.offer.rooms + ' комнаты для ' + value.offer.guests + ' гостей'; // решить как изменять склонения
+  cardElement.querySelector('.popup__text--capacity').textContent = getNoun(value.offer.rooms, ' комната для ', ' комнаты для ', ' комнат для ') + getNoun(value.offer.guests, ' гостя', ' гостей', ' гостей');
   cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + value.offer.checkin + ', выезд до ' + value.offer.checkout;
   cardElement.querySelector('.popup__description').textContent = value.offer.description;
   cardElement.querySelector('.popup__avatar').setAttribute('src', value.author.avatar);
