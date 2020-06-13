@@ -4,10 +4,10 @@ var COUNT = 8;
 var SIZE_PIN_X = 50 / 2;
 var SIZE_PIN_Y = 70;
 
-var type = ['palace', 'flat', 'house', 'bungalo'];
-var times = ['12:00', '13:00', '14:00'];
-var options = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-var photos = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
+var TYPES = ['palace', 'flat', 'house', 'bungalo'];
+var TIMES = ['12:00', '13:00', '14:00'];
+var OPTIONS = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 
 // ищем элемент с классом map и удаляем у него класс map--faded
 var map = document.querySelector('.map');
@@ -49,14 +49,14 @@ var addHousingOptions = function () {
         'title': 'Идеальный вариант на выходные',
         'address': getRandomInt(1, 600) + ', ' + getRandomInt(1, 300),
         'price': getRandomInt(1000, 50000),
-        'type': type[getRandomInt(0, type.length - 1)],
+        'type': TYPES[getRandomInt(0, TYPES.length - 1)],
         'rooms': getRandomInt(1, 5),
         'guests': getRandomInt(1, 8),
-        'checkin': times[getRandomInt(0, times.length - 1)],
-        'checkout': times[getRandomInt(0, times.length - 1)],
-        'features': shuffleArray(options).slice(0, getRandomInt(0, options.length)),
+        'checkin': TIMES[getRandomInt(0, TIMES.length - 1)],
+        'checkout': TIMES[getRandomInt(0, TIMES.length - 1)],
+        'features': shuffleArray(OPTIONS).slice(0, getRandomInt(0, OPTIONS.length)),
         'description': 'Расположен в районе Тайто в Токио, в 200 метрах от храма Ичогаока-Хатиман, в 300 метрах от павильона и конференц-зала Hulic и в 500 метрах от храма Канаами-Инари.',
-        'photos': shuffleArray(photos).slice(0, getRandomInt(1, photos.length)),
+        'photos': shuffleArray(PHOTOS).slice(0, getRandomInt(1, PHOTOS.length)),
       },
       'location': {
         'x': getRandomInt(0, map.offsetWidth),
@@ -94,7 +94,7 @@ renderPins();
 
 /* -----задание 2------ */
 
-var types = {
+var typesoOffers = {
   palace: {
     ru: 'Дворец'
   },
@@ -110,29 +110,27 @@ var types = {
 };
 
 var filtersContainer = document.querySelector('.map__filters-container');
-
 var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
 
-// Функция клонирования карточки объявления
+
+// Функция карточки объявления
 var getCard = function (value) {
   var cardElement = cardTemplate.cloneNode(true);
+  var photoElement = cardElement.querySelector('.popup__photos');
 
   cardElement.querySelector('.popup__title').textContent = value.offer.title;
   cardElement.querySelector('.popup__text--address').textContent = value.offer.address;
-  cardElement.querySelector('.popup__text--price').textContent = value.offer.price + '₽/ночь';
-  cardElement.querySelector('.offer.type').textContent = types[value.type].ru;
+  cardElement.querySelector('.popup__text--price').textContent = value.offer.price + ' ₽/ночь';
+  cardElement.querySelector('.popup__type').textContent = typesoOffers[value.offer.type].ru;
   cardElement.querySelector('.popup__text--capacity').textContent = value.offer.rooms + ' комнаты для ' + value.offer.guests + ' гостей'; // решить как изменять склонения
   cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + value.offer.checkin + ', выезд до ' + value.offer.checkout;
-  cardElement.querySelector('.offer.description').textContent = value.offer.description;
-
-  var featureElement = cardElement.querySelectorAll('.popup__features');
-
-  for (var i = 0; i < value.offer.features.length; i++) {
-
-    featureElement.textContent = value.offer.features[i];
-  }
+  cardElement.querySelector('.popup__description').textContent = value.offer.description;
+  cardElement.querySelector('.popup__avatar').setAttribute('src', value.author.avatar);
+  cardElement.querySelectorAll('.popup__features').textContent = value.offer.features;
+  photoElement.querySelector('img').src = value.offer.photos[0];
 
   return cardElement;
 };
+
 
 map.insertBefore(getCard(housingOptions[0]), filtersContainer);
