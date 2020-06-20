@@ -9,6 +9,7 @@ var CAPACITY_VALUE_1 = '1';
 var LEFT_BUTTON_MOUSE = 1;
 var ENTER_KEY = 'Enter';
 
+
 var TYPES = ['palace', 'flat', 'house', 'bungalo'];
 var TIMES = ['12:00', '13:00', '14:00'];
 var OPTIONS = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
@@ -118,6 +119,13 @@ var typesoOffers = {
   },
 };
 
+var PinMain = {
+  WIDTH: 62,
+  HEIGHT: 62,
+  X: 570,
+  Y: 375
+};
+
 var filtersContainer = document.querySelector('.map__filters-container');
 var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
 
@@ -187,11 +195,11 @@ map.insertBefore(getCard(housingOptions[0]), filtersContainer);
 
 /* доверяй, но проверяй (часть 1) */
 
-
+var mapCard = document.querySelector('.map__card');
 var formElements = document.querySelectorAll('.map__filter, fieldset');
 var mapPinMain = pinsBlock.querySelector('.map__pin--main');
 var adForm = document.querySelector('.ad-form');
-// var adFormAddress = adForm.querySelector('input[name=address]');
+var adFormAddress = adForm.querySelector('input[name=address]');
 var selectRooms = adForm.querySelector('select[name=rooms]');
 var selectCapacity = adForm.querySelector('select[name=capacity]');
 var typeOfHousing = adForm.querySelector('select[name=type]');
@@ -199,6 +207,7 @@ var priceInput = adForm.querySelector('input[name=price]');
 var capacityOptions = selectCapacity.querySelectorAll('option');
 var typeOptions = typeOfHousing.querySelectorAll('option');
 
+mapCard.classList.add('visually-hidden');
 
 var numberOfGuests = {
   1: ['1'],
@@ -215,6 +224,7 @@ var toggleDisabledElements = function () {
 
 var activateMap = function () {
   map.classList.remove('map--faded');
+  mapCard.classList.remove('visually-hidden');
   adForm.classList.remove('ad-form--disabled');
   selectRooms.addEventListener('change', onRoomNumberChange);
   typeOfHousing.addEventListener('change', onTypeHousingChange);
@@ -223,8 +233,19 @@ var activateMap = function () {
   toggleDisabledElements();
   validateRooms();
   validateMinPrice();
+  getAddressValue();
 };
 
+var getPinCoordinates = function () {
+  var x = map.classList.contains('map--faded') ? PinMain.X + PinMain.WIDTH / 2 : PinMain.X + SIZE_PIN_X;
+  var y = map.classList.contains('map--faded') ? PinMain.Y + PinMain.HEIGHT / 2 : PinMain.Y + SIZE_PIN_Y;
+
+  return x + ', ' + y;
+};
+
+var getAddressValue = function () {
+  adFormAddress.value = getPinCoordinates();
+};
 
 var validateRooms = function () {
   var roomValue = selectRooms.value;
