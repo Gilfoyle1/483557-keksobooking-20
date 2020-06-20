@@ -194,7 +194,7 @@ map.insertBefore(getCard(housingOptions[0]), filtersContainer);
 
 
 /* доверяй, но проверяй (часть 1) */
-
+var mapPin = document.querySelectorAll('.map__pin:not(.map__pin--main)');
 var mapCard = document.querySelector('.map__card');
 var formElements = document.querySelectorAll('.map__filter, fieldset');
 var mapPinMain = pinsBlock.querySelector('.map__pin--main');
@@ -206,9 +206,7 @@ var typeOfHousing = adForm.querySelector('select[name=type]');
 var priceInput = adForm.querySelector('input[name=price]');
 var capacityOptions = selectCapacity.querySelectorAll('option');
 var typeOptions = typeOfHousing.querySelectorAll('option');
-
 mapCard.classList.add('visually-hidden');
-
 var numberOfGuests = {
   1: ['1'],
   2: ['1', '2'],
