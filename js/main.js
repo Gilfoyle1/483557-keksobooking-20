@@ -15,20 +15,18 @@ var TIMES = ['12:00', '13:00', '14:00'];
 var OPTIONS = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 
-// ищем элемент с классом map и удаляем у него класс map--faded
+
 var map = document.querySelector('.map');
 
-
-// ищем шаблон для копирования пинов и элемент, в который будем вставлять их
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 var pinsBlock = map.querySelector('.map__pins');
 
-// функция рандомного числа в промежутке
+
 var getRandomInt = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-// функция создания массива случайной длины
+
 var shuffleArray = function (a) {
   var j;
   var x;
@@ -44,7 +42,7 @@ var shuffleArray = function (a) {
 
 var housingOptions = [];
 
-// функция с циклом, который перебирает объект объявлений и добавляет его в массив housingOptions
+
 var addHousingOptions = function () {
   for (var i = 0; i < COUNT; i++) {
     housingOptions.push({
@@ -73,7 +71,7 @@ var addHousingOptions = function () {
 };
 addHousingOptions();
 
-// создаем функцию клонирования
+
 var renderPin = function (pin) {
   var clonePin = pinTemplate.cloneNode(true);
   clonePin.style.left = pin.location.x - SIZE_PIN_X + 'px';
@@ -86,19 +84,16 @@ var renderPin = function (pin) {
   return clonePin;
 };
 
-// создаем цикл добавления пинов
+
 var renderPins = function () {
   var fragment = document.createDocumentFragment();
   for (var i = 0; i < housingOptions.length; i++) {
     fragment.appendChild(renderPin(housingOptions[i]));
   }
 
-  // добавляем фрагмент в элемент страницы
   pinsBlock.appendChild(fragment);
 };
-renderPins();
 
-/* -----задание 2------ */
 
 var typesoOffers = {
   palace: {
@@ -129,7 +124,7 @@ var PinMain = {
 var filtersContainer = document.querySelector('.map__filters-container');
 var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
 
-// функция склонения
+
 var getNoun = function (number, one, two, five) {
   number = Math.abs(number);
   number %= 100;
@@ -147,7 +142,6 @@ var getNoun = function (number, one, two, five) {
 };
 
 
-// Функция карточки объявления
 var getCard = function (card) {
   var cardElement = cardTemplate.cloneNode(true);
 
@@ -193,8 +187,6 @@ var getCard = function (card) {
 map.insertBefore(getCard(housingOptions[0]), filtersContainer);
 
 
-/* доверяй, но проверяй (часть 1) */
-var mapPin = document.querySelectorAll('.map__pin:not(.map__pin--main)');
 var mapCard = document.querySelector('.map__card');
 var formElements = document.querySelectorAll('.map__filter, fieldset');
 var mapPinMain = pinsBlock.querySelector('.map__pin--main');
@@ -215,12 +207,6 @@ var numberOfGuests = {
 };
 
 
-var toggleHiddenPins = function () {
-  for (var i = 0; i < mapPin.length; i++) {
-    pinsBlock.removeChild(mapPin[i]);
-  }
-};
-
 var toggleDisabledElements = function () {
   for (var i = 0; i < formElements.length; i++) {
     formElements[i].disabled = !formElements[i].disabled;
@@ -239,19 +225,17 @@ var activateMap = function () {
   validateRooms();
   validateMinPrice();
   getAddressValue();
-  toggleHiddenPins();
-};
-
-var getPinCoordinates = function () {
-  var x = map.classList.contains('map--faded') ? PinMain.X + PinMain.WIDTH / 2 : PinMain.X + SIZE_PIN_X;
-  var y = map.classList.contains('map--faded') ? PinMain.Y + PinMain.HEIGHT / 2 : PinMain.Y + SIZE_PIN_Y;
-
-  return x + ', ' + y;
+  renderPins();
 };
 
 var getAddressValue = function () {
-  adFormAddress.value = getPinCoordinates();
+  var x = map.classList.contains('map--faded') ? PinMain.X + PinMain.WIDTH / 2 : PinMain.X + SIZE_PIN_X;
+  var y = map.classList.contains('map--faded') ? PinMain.Y + PinMain.HEIGHT : PinMain.Y + SIZE_PIN_Y;
+
+  adFormAddress.value = x + ', ' + y;
 };
+getAddressValue();
+
 
 var validateRooms = function () {
   var roomValue = selectRooms.value;
@@ -296,8 +280,6 @@ var onPinEnterPress = function (evt) {
     activateMap();
   }
 };
-
-selectCapacity.value = CAPACITY_VALUE_1;
 
 toggleDisabledElements();
 mapPinMain.addEventListener('mousedown', onPinClick);
