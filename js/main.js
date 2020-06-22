@@ -214,6 +214,13 @@ var numberOfGuests = {
   100: ['0']
 };
 
+
+var toggleHiddenPins = function () {
+  for (var i = 0; i < mapPin.length; i++) {
+    pinsBlock.removeChild(mapPin[i]);
+  }
+};
+
 var toggleDisabledElements = function () {
   for (var i = 0; i < formElements.length; i++) {
     formElements[i].disabled = !formElements[i].disabled;
@@ -232,6 +239,7 @@ var activateMap = function () {
   validateRooms();
   validateMinPrice();
   getAddressValue();
+  toggleHiddenPins();
 };
 
 var getPinCoordinates = function () {
