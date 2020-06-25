@@ -8,7 +8,7 @@ var CAPACITY_VALUE_0 = '0';
 var CAPACITY_VALUE_1 = '1';
 var LEFT_BUTTON_MOUSE = 1;
 var ENTER_KEY = 'Enter';
-
+var ESC_KEY = 'Escape';
 
 var TYPES = ['palace', 'flat', 'house', 'bungalo'];
 var TIMES = ['12:00', '13:00', '14:00'];
@@ -17,10 +17,8 @@ var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.g
 
 
 var map = document.querySelector('.map');
-
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 var pinsBlock = map.querySelector('.map__pins');
-
 
 var getRandomInt = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -80,6 +78,15 @@ var renderPin = function (pin) {
   var img = clonePin.querySelector('img');
   img.src = pin.author.avatar;
   img.alt = pin.offer.title;
+
+  clonePin.addEventListener('click', function () {
+    onPinOpen(pin);
+  });
+  clonePin.addEventListener('keyup', function (evt) {
+    if (evt.key === ENTER_KEY) {
+      onPinOpen(pin);
+    }
+  });
 
   return clonePin;
 };
@@ -146,6 +153,7 @@ var getCard = function (card) {
   var cardElement = cardTemplate.cloneNode(true);
 
   var photoElement = cardElement.querySelector('.popup__photos');
+  var popupClose = cardElement.querySelector('.popup__close');
 
   cardElement.querySelector('.popup__title').textContent = card.offer.title;
   cardElement.querySelector('.popup__text--address').textContent = card.offer.address;
@@ -180,12 +188,18 @@ var getCard = function (card) {
     photo.remove();
   }
 
+  popupClose.addEventListener('click', onCardRemove);
+  document.addEventListener('keyup', onCardEscPress);
+
   return cardElement;
 };
 
 
 map.insertBefore(getCard(housingOptions[0]), filtersContainer);
 
+var renderCard = function (pin) {
+  filtersContainer.insertAdjacentElement('beforebegin', getCard(pin));
+};
 
 var mapCard = document.querySelector('.map__card');
 var formElements = document.querySelectorAll('.map__filter, fieldset');
@@ -196,9 +210,12 @@ var selectRooms = adForm.querySelector('select[name=rooms]');
 var selectCapacity = adForm.querySelector('select[name=capacity]');
 var typeOfHousing = adForm.querySelector('select[name=type]');
 var priceInput = adForm.querySelector('input[name=price]');
+var selectCheckIn = adForm.querySelector('select[name=timein]');
+var selectCheckOut = adForm.querySelector('select[name=timeout]');
 var capacityOptions = selectCapacity.querySelectorAll('option');
 var typeOptions = typeOfHousing.querySelectorAll('option');
 mapCard.classList.add('visually-hidden');
+
 var numberOfGuests = {
   1: ['1'],
   2: ['1', '2'],
@@ -219,8 +236,10 @@ var activateMap = function () {
   adForm.classList.remove('ad-form--disabled');
   selectRooms.addEventListener('change', onRoomNumberChange);
   typeOfHousing.addEventListener('change', onTypeHousingChange);
+  selectCheckIn.addEventListener('change', onCheckOutChange);
+  selectCheckOut.addEventListener('change', onCheckInChange);
   mapPinMain.removeEventListener('mousedown', onPinClick);
-  mapPinMain.removeEventListener('keydown', onPinEnterPress);
+  mapPinMain.removeEventListener('keyup', onPinEnterPress);
   toggleDisabledElements();
   validateRooms();
   validateMinPrice();
@@ -269,6 +288,14 @@ var onTypeHousingChange = function () {
   validateMinPrice();
 };
 
+var onCheckOutChange = function () {
+  selectCheckOut.value = selectCheckIn.value;
+};
+
+var onCheckInChange = function () {
+  selectCheckIn.value = selectCheckOut.value;
+};
+
 var onPinClick = function (evt) {
   if (evt.which === LEFT_BUTTON_MOUSE) {
     activateMap();
@@ -281,6 +308,31 @@ var onPinEnterPress = function (evt) {
   }
 };
 
+var onCardEscPress = function (evt) {
+  if (evt.key === ESC_KEY) {
+    onCardRemove();
+  }
+};
+
+var onPinOpen = function (pin) {
+  onCardRemove();
+  renderCard(pin);
+};
+
+var onCardRemove = function () {
+  var card = map.querySelector('.map__card');
+
+  if (card) {
+    var popupClose = card.querySelector('.popup__close');
+
+    card.remove();
+
+    popupClose.removeEventListener('click', onCardRemove);
+    document.removeEventListener('keyup', onCardEscPress);
+  }
+};
+
 toggleDisabledElements();
 mapPinMain.addEventListener('mousedown', onPinClick);
-mapPinMain.addEventListener('keydown', onPinEnterPress);
+mapPinMain.addEventListener('keyup', onPinEnterPress);
+onCardRemove();
