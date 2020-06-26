@@ -78,7 +78,7 @@
       card.remove();
 
       popupClose.removeEventListener('click', onCardRemove);
-      document.removeEventListener('keydown', onCardEscPress);
+      document.removeEventListener('keyup', onCardEscPress);
     }
     removePinActive();
   };
@@ -93,14 +93,14 @@
     window.form.addValidation();
 
     mapPinMain.removeEventListener('mousedown', onPinClick);
-    mapPinMain.removeEventListener('keydown', onPinEnterPress);
+    mapPinMain.removeEventListener('keyup', onPinEnterPress);
   };
 
   toggleDisabledElements();
   getAddressValue();
 
   mapPinMain.addEventListener('mousedown', onPinClick);
-  mapPinMain.addEventListener('keydown', onPinEnterPress);
+  mapPinMain.addEventListener('keyup', onPinEnterPress);
 
   window.map = {
     onAdOpen: onAdOpen,

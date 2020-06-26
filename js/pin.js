@@ -39,7 +39,7 @@
       window.map.onAdOpen(pin);
       adElement.classList.add('map__pin--active');
     });
-    adElement.addEventListener('keydown', function (evt) {
+    adElement.addEventListener('keyup', function (evt) {
       window.utils.isEnterEvent(evt, window.map.onAdOpen, pin);
     });
 

@@ -88,7 +88,7 @@
     generatePhotos(card.offer.photos, cardElement);
 
     popupClose.addEventListener('click', window.map.onCardRemove);
-    document.addEventListener('keydown', window.map.onCardEscPress);
+    document.addEventListener('keyup', window.map.onCardEscPress);
 
     return cardElement;
   };
