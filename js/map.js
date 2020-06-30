@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+  var COUNT = 8;
   var LEFT_BUTTON_MOUSE = 1;
 
   var PinMain = {
@@ -137,7 +138,7 @@
 
     window.form.toggleDisabledElements();
     window.form.getAddressValue(getPinCoordinates());
-    window.backend.load(window.pin.onSuccess, window.backend.onError);
+    window.pin.render(COUNT);
     window.form.addValidation();
 
     mapPinMain.removeEventListener('keyup', onPinEnterPress);
