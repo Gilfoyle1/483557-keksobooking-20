@@ -16,6 +16,25 @@
     MAX_Y: 630
   };
 
+  var typesoOffers = {
+    palace: {
+      ru: 'Дворец',
+      minPrice: '10000'
+    },
+    flat: {
+      ru: 'Квартира',
+      minPrice: '1000'
+    },
+    house: {
+      ru: 'Дом',
+      minPrice: '5000'
+    },
+    bungalo: {
+      ru: 'Бунгало',
+      minPrice: '0'
+    },
+  };
+
   var getRandomInt = function (min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   };
@@ -70,6 +89,7 @@
   };
 
   window.data = {
-    generateAd: generateAd
+    generateAd: generateAd,
+    typesoOffers: typesoOffers
   };
 })();
