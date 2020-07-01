@@ -13,20 +13,6 @@
 
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
-  var createPinsArray = function (pinsAmount) {
-    var pins = [];
-
-    for (var i = 0; i < pinsAmount; i++) {
-      var pin = window.data.generateAd(i);
-
-      pins.push(pin);
-    }
-
-    return pins;
-  };
-
-  var pins = createPinsArray(COUNT);
-
   var generatePin = function (pin) {
     var adElement = pinTemplate.cloneNode(true);
 
@@ -49,14 +35,16 @@
   var renderAllPins = function (PinsAmount) {
     var fragment = document.createDocumentFragment();
 
-    for (var i = 0; i < PinsAmount; i++) {
-      fragment.appendChild(generatePin(pins[i]));
+    for (var i = 0; i < COUNT; i++) {
+      var ad = window.utils.getRandomElement(PinsAmount);
+
+      fragment.appendChild(generatePin(ad));
     }
 
     mapPins.appendChild(fragment);
   };
 
   window.pin = {
-    render: renderAllPins
+    onSuccess: renderAllPins
   };
 })();
