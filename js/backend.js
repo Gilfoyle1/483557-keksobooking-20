@@ -53,6 +53,7 @@
     xhr.open('GET', URL_LOAD);
     xhr.send();
   };
+
   var push = function (data, onLoad, onError) {
     var xhr = setupLoad(onLoad, onError);
 

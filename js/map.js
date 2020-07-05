@@ -154,7 +154,7 @@
 
     window.form.toggleDisabledElements();
     window.form.getAddressValue(getPinCoordinates());
-    window.backend.load(window.pin.onSuccess, window.backend.onError);
+    window.backend.load(window.pin.onSuccess, window.dialog.onError);
     window.form.addValidation();
 
     mapPinMain.removeEventListener('keyup', onPinEnterPress);
@@ -178,7 +178,6 @@
     adFormReset.removeEventListener('click', droppingMap);
   };
 
-  window.form.toggleDisabledElements();
   window.form.getAddressValue(getPinCoordinates());
 
   mapPinMain.addEventListener('mousedown', onPinClick);
