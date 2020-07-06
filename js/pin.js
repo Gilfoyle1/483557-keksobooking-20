@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var COUNT = 8;
+  var COUNT = 5;
 
   var Pin = {
     WIDTH: 50,

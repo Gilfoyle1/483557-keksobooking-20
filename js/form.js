@@ -74,9 +74,20 @@
     selectCheckOut.addEventListener('change', onCheckInChange);
   };
 
+  var onFormSubmit = function (evt) {
+    evt.preventDefault();
+
+    window.backend.push(new FormData(adForm), window.dialog.onSuccess, window.dialog.onError);
+
+    window.map.droppingMap();
+  };
+
+  toggleDisabledElements();
+
   window.form = {
     addValidation: addValidation,
     toggleDisabledElements: toggleDisabledElements,
-    getAddressValue: getAddressValue
+    getAddressValue: getAddressValue,
+    onSubmit: onFormSubmit
   };
 })();
