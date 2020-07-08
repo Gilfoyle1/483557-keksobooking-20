@@ -148,13 +148,28 @@
     });
   };
 
+  var onFilterFormChange = window.debounce(function (data) {
+    removePins();
+    onCardRemove();
+
+    window.pin.render(data);
+  });
+
+  var onSuccess = function (data) {
+    window.pin.render(data);
+
+    mapFilters.addEventListener('change', function () {
+      onFilterFormChange(data);
+    });
+  };
+
   var activateMap = function () {
     map.classList.remove('map--faded');
     adForm.classList.remove('ad-form--disabled');
 
     window.form.toggleDisabledElements();
     window.form.getAddressValue(getPinCoordinates());
-    window.backend.load(window.pin.onSuccess, window.dialog.onError);
+    window.backend.load(onSuccess, window.dialog.onError);
     window.form.addValidation();
 
     mapPinMain.removeEventListener('keyup', onPinEnterPress);

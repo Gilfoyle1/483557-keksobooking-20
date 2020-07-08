@@ -34,17 +34,16 @@
 
   var renderAllPins = function (PinsAmount) {
     var fragment = document.createDocumentFragment();
+    var filteredPins = window.filter(PinsAmount).slice(0, COUNT);
 
-    for (var i = 0; i < COUNT; i++) {
-      var ad = window.utils.getRandomElement(PinsAmount);
-
+    filteredPins.forEach(function (ad) {
       fragment.appendChild(generatePin(ad));
-    }
+    });
 
     mapPins.appendChild(fragment);
   };
 
   window.pin = {
-    onSuccess: renderAllPins
+    render: renderAllPins
   };
 })();
