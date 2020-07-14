@@ -74,6 +74,13 @@
     selectCheckOut.addEventListener('change', onCheckInChange);
   };
 
+  var removeValidation = function () {
+    selectRooms.removeEventListener('change', onRoomNumberChange);
+    typeOfHousing.removeEventListener('change', onTypeHousingChange);
+    selectCheckIn.removeEventListener('change', onCheckOutChange);
+    selectCheckOut.removeEventListener('change', onCheckInChange);
+  };
+
   var onFormSubmit = function (evt) {
     evt.preventDefault();
 
@@ -86,6 +93,7 @@
 
   window.form = {
     addValidation: addValidation,
+    removeValidation: removeValidation,
     toggleDisabledElements: toggleDisabledElements,
     getAddressValue: getAddressValue,
     onSubmit: onFormSubmit
