@@ -18,6 +18,7 @@
     MIN_X: 1
   };
 
+  var ads = [];
 
   var map = document.querySelector('.map');
   var mapPins = map.querySelector('.map__pins');
@@ -150,19 +151,18 @@
     });
   };
 
-  var onFilterFormChange = window.debounce(function (data) {
+  var onFilterFormChange = window.debounce(function () {
     removePins();
     onCardRemove();
 
-    window.pin.render(data);
+    window.pin.render(ads);
   });
 
   var onSuccess = function (data) {
+    ads = data;
     window.pin.render(data);
 
-    mapFilters.addEventListener('change', function () {
-      onFilterFormChange(data);
-    });
+    mapFilters.addEventListener('change', onFilterFormChange);
   };
 
   var activateMap = function () {
@@ -192,8 +192,10 @@
     setDefaultMainPin();
     removePins();
     onCardRemove();
+    window.form.removeValidation();
     window.download.resetPictures();
 
+    mapFilters.removeEventListener('change', onFilterFormChange);
     avatarSelection.removeEventListener('change', window.download.onAvatarLoad);
     pictureSelection.removeEventListener('change', window.download.onPhotosLoad);
 
