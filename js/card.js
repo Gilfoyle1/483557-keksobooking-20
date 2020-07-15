@@ -20,6 +20,10 @@
 
       popupFeatures.appendChild(featureElement);
     });
+
+    if (features.length === 0) {
+      popupFeatures.style.display = 'none';
+    }
   };
 
   var generatePhotos = function (photos, cardElement) {
@@ -35,6 +39,10 @@
 
       popupPhotos.appendChild(photoElement);
     });
+
+    if (photos.length === 0) {
+      popupPhotos.style.display = 'none';
+    }
   };
 
   var getNoun = function (number, one, two, five) {
