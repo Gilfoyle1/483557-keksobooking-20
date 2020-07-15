@@ -18,6 +18,7 @@
     MIN_X: 1
   };
 
+  var ads = [];
 
   var map = document.querySelector('.map');
   var mapPins = map.querySelector('.map__pins');
@@ -150,39 +151,37 @@
     });
   };
 
-  var onFilterFormChange = window.debounce(function (data) {
+  var onFilterFormChange = window.debounce(function () {
     removePins();
     onCardRemove();
 
-    window.pin.render(data);
+    window.pin.render(ads);
   });
 
   var onSuccess = function (data) {
-    window.pin.render(data);
+    ads = data;
 
-    mapFilters.addEventListener('change', function () {
-      onFilterFormChange(data);
-    });
-  };
-
-  var activateMap = function () {
     map.classList.remove('map--faded');
     adForm.classList.remove('ad-form--disabled');
 
     window.form.toggleDisabledElements();
     window.form.getAddressValue(getPinCoordinates());
-    window.backend.load(onSuccess, window.dialog.onError);
+    window.pin.render(data);
     window.form.addValidation();
 
-    mapPinMain.removeEventListener('keyup', onPinEnterPress);
-
+    mapFilters.addEventListener('change', onFilterFormChange);
     avatarSelection.addEventListener('change', window.download.onAvatarLoad);
     pictureSelection.addEventListener('change', window.download.onPhotosLoad);
     adForm.addEventListener('submit', window.form.onSubmit);
-    adFormReset.addEventListener('click', droppingMap);
+    adFormReset.addEventListener('click', onMapDeactivate);
+    mapPinMain.removeEventListener('keyup', onPinEnterPress);
   };
 
-  var droppingMap = function () {
+  var activateMap = function () {
+    window.backend.load(onSuccess, window.dialog.onError);
+  };
+
+  var onMapDeactivate = function () {
     map.classList.add('map--faded');
     adForm.classList.add('ad-form--disabled');
 
@@ -192,13 +191,15 @@
     setDefaultMainPin();
     removePins();
     onCardRemove();
+    window.form.removeValidation();
     window.download.resetPictures();
 
+    mapFilters.removeEventListener('change', onFilterFormChange);
     avatarSelection.removeEventListener('change', window.download.onAvatarLoad);
     pictureSelection.removeEventListener('change', window.download.onPhotosLoad);
 
     adForm.removeEventListener('submit', window.form.onSubmit);
-    adFormReset.removeEventListener('click', droppingMap);
+    adFormReset.removeEventListener('click', onMapDeactivate);
   };
 
   window.form.getAddressValue(getPinCoordinates());
@@ -210,6 +211,6 @@
     onAdOpen: onAdOpen,
     onCardRemove: onCardRemove,
     onCardEscPress: onCardEscPress,
-    droppingMap: droppingMap
+    onMapDeactivate: onMapDeactivate
   };
 })();

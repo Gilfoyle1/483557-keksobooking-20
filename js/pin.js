@@ -37,7 +37,9 @@
     var filteredPins = window.filter(PinsAmount).slice(0, COUNT);
 
     filteredPins.forEach(function (ad) {
-      fragment.appendChild(generatePin(ad));
+      if (ad.offer) {
+        fragment.appendChild(generatePin(ad));
+      }
     });
 
     mapPins.appendChild(fragment);
