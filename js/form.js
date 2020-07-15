@@ -85,8 +85,6 @@
     evt.preventDefault();
 
     window.backend.push(new FormData(adForm), window.dialog.onSuccess, window.dialog.onError);
-
-    window.map.droppingMap();
   };
 
   toggleDisabledElements();

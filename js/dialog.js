@@ -24,6 +24,8 @@
       window.utils.isEscEvent(evt, removeDialog);
     };
 
+    window.map.droppingMap();
+
     successElement.addEventListener('click', onDialogClick);
     document.addEventListener('keydown', onDialogPressEsc);
 
