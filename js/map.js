@@ -18,7 +18,7 @@
     MIN_X: 1
   };
 
-  var ads = [];
+  var adverts = [];
 
   var map = window.data.map;
   var mapPins = window.data.mapPins;
@@ -111,9 +111,9 @@
     window.utils.isEnterEvent(evt, activateMap);
   };
 
-  var onAdOpen = function (ad) {
+  var onAdOpen = function (advert) {
     onCardRemove();
-    window.card.render(ad);
+    window.card.render(advert);
   };
 
   var onCardEscPress = function (evt) {
@@ -155,11 +155,11 @@
     removePins();
     onCardRemove();
 
-    window.pin.render(ads);
+    window.pin.render(adverts);
   });
 
   var onSuccess = function (data) {
-    ads = data;
+    adverts = data;
 
     map.classList.remove('map--faded');
     adForm.classList.remove('ad-form--disabled');

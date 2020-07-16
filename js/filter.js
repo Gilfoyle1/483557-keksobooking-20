@@ -40,8 +40,8 @@
 
   };
 
-  window.filter = function (ads) {
-    return ads.filter(function (element) {
+  window.filter = function (adverts) {
+    return adverts.filter(function (element) {
       return filterHousing(element.offer.type, housingType) &&
         filterHousingPrice(element.offer.price, housingPrice) &&
         filterHousing(element.offer.rooms, housingRooms) &&

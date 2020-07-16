@@ -34,9 +34,9 @@
     var fragment = document.createDocumentFragment();
     var filteredPins = window.filter(PinsAmount).slice(0, COUNT);
 
-    filteredPins.forEach(function (ad) {
-      if (ad.offer) {
-        fragment.appendChild(generatePin(ad));
+    filteredPins.forEach(function (advert) {
+      if (advert.offer) {
+        fragment.appendChild(generatePin(advert));
       }
     });
 
