@@ -8,13 +8,13 @@
     100: ['0']
   };
 
-  var adForm = document.querySelector('.ad-form');
+  var adForm = window.data.adForm;
   var selectCapacity = adForm.querySelector('select[name=capacity]');
+  var capacityOptions = selectCapacity.querySelectorAll('option');
   var selectRooms = adForm.querySelector('select[name=rooms]');
   var typeOfHousing = adForm.querySelector('select[name=type]');
   var selectCheckIn = adForm.querySelector('select[name=timein]');
   var selectCheckOut = adForm.querySelector('select[name=timeout]');
-  var capacityOptions = selectCapacity.querySelectorAll('option');
   var typeOptions = typeOfHousing.querySelectorAll('option');
   var priceInput = adForm.querySelector('input[name=price]');
   var formElements = document.querySelectorAll('.map__filter, fieldset');

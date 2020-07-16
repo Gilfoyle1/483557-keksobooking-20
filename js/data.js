@@ -21,8 +21,17 @@
     },
   };
 
+  var adForm = document.querySelector('.ad-form');
+  var map = document.querySelector('.map');
+  var mapFilters = map.querySelector('.map__filters');
+  var mapPins = map.querySelector('.map__pins');
+
 
   window.data = {
-    typesoOffers: typesoOffers
+    typesoOffers: typesoOffers,
+    adForm: adForm,
+    map: map,
+    mapFilters: mapFilters,
+    mapPins: mapPins
   };
 })();

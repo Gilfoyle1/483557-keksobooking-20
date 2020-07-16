@@ -8,8 +8,6 @@
     HEIGHT: 70
   };
 
-  var map = document.querySelector('.map');
-  var mapPins = map.querySelector('.map__pins');
 
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
@@ -42,7 +40,7 @@
       }
     });
 
-    mapPins.appendChild(fragment);
+    window.data.mapPins.appendChild(fragment);
   };
 
   window.pin = {

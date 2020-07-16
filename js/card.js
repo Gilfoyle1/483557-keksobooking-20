@@ -2,9 +2,8 @@
 
 (function () {
 
-  var map = document.querySelector('.map');
+  var mapFiltersContainer = window.data.map.querySelector('.map__filters-container');
   var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
-  var mapFilters = map.querySelector('.map__filters-container');
 
 
   var generateFeatures = function (features, cardElement) {
@@ -133,7 +132,7 @@
   };
 
   var renderCard = function (pin) {
-    mapFilters.insertAdjacentElement('beforebegin', generateCard(pin));
+    mapFiltersContainer.insertAdjacentElement('beforebegin', generateCard(pin));
   };
 
   window.card = {
