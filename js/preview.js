@@ -48,7 +48,7 @@
     photoRooms.innerHTML = '';
   };
 
-  window.download = {
+  window.preview = {
     onAvatarLoad: onAvatarLoad,
     onPhotosLoad: onPhotosLoad,
     resetPictures: resetPictures

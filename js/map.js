@@ -170,8 +170,8 @@
     window.form.addValidation();
 
     mapFilters.addEventListener('change', onFilterFormChange);
-    avatarSelection.addEventListener('change', window.download.onAvatarLoad);
-    pictureSelection.addEventListener('change', window.download.onPhotosLoad);
+    avatarSelection.addEventListener('change', window.preview.onAvatarLoad);
+    pictureSelection.addEventListener('change', window.preview.onPhotosLoad);
     adForm.addEventListener('submit', window.form.onSubmit);
     adFormReset.addEventListener('click', onMapDeactivate);
     mapPinMain.removeEventListener('keyup', onPinEnterPress);
@@ -192,11 +192,11 @@
     removePins();
     onCardRemove();
     window.form.removeValidation();
-    window.download.resetPictures();
+    window.preview.resetPictures();
 
     mapFilters.removeEventListener('change', onFilterFormChange);
-    avatarSelection.removeEventListener('change', window.download.onAvatarLoad);
-    pictureSelection.removeEventListener('change', window.download.onPhotosLoad);
+    avatarSelection.removeEventListener('change', window.preview.onAvatarLoad);
+    pictureSelection.removeEventListener('change', window.preview.onPhotosLoad);
 
     adForm.removeEventListener('submit', window.form.onSubmit);
     adFormReset.removeEventListener('click', onMapDeactivate);

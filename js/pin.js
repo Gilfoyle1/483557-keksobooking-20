@@ -30,9 +30,9 @@
     return adElement;
   };
 
-  var renderAllPins = function (PinsAmount) {
+  var renderAllPins = function (pinsAmount) {
     var fragment = document.createDocumentFragment();
-    var filteredPins = window.filter(PinsAmount).slice(0, COUNT);
+    var filteredPins = window.filter(pinsAmount).slice(0, COUNT);
 
     filteredPins.forEach(function (advert) {
       if (advert.offer) {
