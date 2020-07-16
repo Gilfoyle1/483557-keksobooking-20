@@ -46,7 +46,7 @@
     return array.slice(0, randomIndex);
   };
 
-  window.utils = {
+  window.main = {
     isEscEvent: isEscEvent,
     isEnterEvent: isEnterEvent,
     getRandomInt: getRandomInt,
