@@ -14,16 +14,15 @@
 
     if (features.length === 0) {
       popupFeatures.style.display = 'none';
+    } else {
+      features.forEach(function (feature) {
+        var featureElement = popupFeature.cloneNode(true);
+
+        featureElement.className = 'popup__feature popup__feature--' + feature;
+
+        popupFeatures.appendChild(featureElement);
+      });
     }
-
-    features.forEach(function (feature) {
-      var featureElement = popupFeature.cloneNode(true);
-
-      featureElement.className = 'popup__feature popup__feature--' + feature;
-
-      popupFeatures.appendChild(featureElement);
-    });
-
   };
 
   var generatePhotos = function (photos, cardElement) {
@@ -34,16 +33,16 @@
 
     if (photos.length === 0) {
       popupPhotos.style.display = 'none';
+    } else {
+
+      photos.forEach(function (photo) {
+        var photoElement = popupPhoto.cloneNode(true);
+
+        photoElement.src = photo;
+
+        popupPhotos.appendChild(photoElement);
+      });
     }
-
-    photos.forEach(function (photo) {
-      var photoElement = popupPhoto.cloneNode(true);
-
-      photoElement.src = photo;
-
-      popupPhotos.appendChild(photoElement);
-    });
-
   };
 
   var generateCard = function (card) {
