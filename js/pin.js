@@ -12,22 +12,22 @@
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
   var generatePin = function (pin) {
-    var advertElementnt = pinTemplate.cloneNode(true);
+    var advertElement = pinTemplate.cloneNode(true);
 
-    advertElementnt.style.left = pin.location.x - Pin.WIDTH / 2 + 'px';
-    advertElementnt.style.top = pin.location.y - Pin.HEIGHT + 'px';
-    advertElementnt.querySelector('img').src = pin.author.avatar;
-    advertElementnt.querySelector('img').alt = pin.offer.title;
+    advertElement.style.left = pin.location.x - Pin.WIDTH / 2 + 'px';
+    advertElement.style.top = pin.location.y - Pin.HEIGHT + 'px';
+    advertElement.querySelector('img').src = pin.author.avatar;
+    advertElement.querySelector('img').alt = pin.offer.title;
 
-    advertElementnt.addEventListener('click', function () {
+    advertElement.addEventListener('click', function () {
       window.map.onAdOpen(pin);
-      advertElementnt.classList.add('map__pin--active');
+      advertElement.classList.add('map__pin--active');
     });
-    advertElementnt.addEventListener('keyup', function (evt) {
+    advertElement.addEventListener('keyup', function (evt) {
       window.main.isEnterEvent(evt, window.map.onAdOpen, pin);
     });
 
-    return advertElementnt;
+    return advertElement;
   };
 
   var renderAllPins = function (pinsAmount) {

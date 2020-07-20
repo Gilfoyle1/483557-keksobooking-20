@@ -17,11 +17,11 @@
   var selectCheckOut = adForm.querySelector('select[name=timeout]');
   var typeOptions = typeOfHousing.querySelectorAll('option');
   var priceInput = adForm.querySelector('input[name=price]');
-  var formElements = document.querySelectorAll('.map__filter, fieldset');
+  var formFilters = document.querySelectorAll('.map__filter, fieldset');
   var adFormAddress = adForm.querySelector('input[name=address]');
 
   var toggleDisabledElements = function () {
-    formElements.forEach(function (formElement) {
+    formFilters.forEach(function (formElement) {
       formElement.disabled = !formElement.disabled;
     });
   };
@@ -42,7 +42,7 @@
   var validateMinPrice = function () {
     var indexSelected = typeOfHousing.selectedIndex;
     var activeTypeOption = typeOptions[indexSelected];
-    var housingMinPrice = window.data.typesoOffers[activeTypeOption.value].minPrice;
+    var housingMinPrice = window.data.typesOffers[activeTypeOption.value].minPrice;
 
     priceInput.min = housingMinPrice;
     priceInput.placeholder = housingMinPrice;

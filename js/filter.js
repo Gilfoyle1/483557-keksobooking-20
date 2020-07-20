@@ -9,7 +9,7 @@
   var housingGuests = mapFilters.querySelector('#housing-guests');
 
   var priceToRoom = {
-    cheap: {
+    low: {
       min: 0,
       max: 10000
     },
@@ -17,36 +17,44 @@
       min: 10000,
       max: 50000
     },
-    expensive: {
+    high: {
       min: 50000,
       max: Infinity
     }
   };
 
-  var filterHousing = function (data, filterElement) {
-    return filterElement.value === 'any' ? true : data.toString() === filterElement.value;
+  var filterHousing = function (dataElement, filterElement) {
+    return filterElement.value === 'any' ? true : dataElement.toString() === filterElement.value;
   };
 
-  var filterHousingPrice = function (data, filterElement) {
-    return filterElement.value === 'any' ? true : priceToRoom[filterElement.value].min <= data && data < priceToRoom[filterElement.value].max;
+  var filterHousingPrice = function (dataElement, filterElement) {
+    return filterElement.value === 'any' ? true : priceToRoom[filterElement.value].min <= dataElement && dataElement < priceToRoom[filterElement.value].max;
   };
 
-  var filterHousingCheckbox = function (data) {
+  var filterHousingCheckbox = function (dataElement) {
     var housingCheckbox = mapFilters.querySelectorAll('.map__checkbox:checked');
 
     return Array.from(housingCheckbox).every(function (feature) {
-      return data.indexOf(feature.value) >= 0;
+      return dataElement.indexOf(feature.value) >= 0;
     });
 
   };
-
   window.filter = function (adverts) {
-    return adverts.filter(function (element) {
-      return filterHousing(element.offer.type, housingType) &&
-        filterHousingPrice(element.offer.price, housingPrice) &&
-        filterHousing(element.offer.rooms, housingRooms) &&
-        filterHousing(element.offer.guests, housingGuests) &&
-        filterHousingCheckbox(element.offer.features);
-    });
+    var filteredAdverts = [];
+    for (var i = 0; i < adverts.length; i++) {
+      if (filterHousing(adverts[i].offer.type, housingType) &&
+        filterHousingPrice(adverts[i].offer.price, housingPrice) &&
+        filterHousing(adverts[i].offer.rooms, housingRooms) &&
+        filterHousing(adverts[i].offer.guests, housingGuests) &&
+        filterHousingCheckbox(adverts[i].offer.features)) {
+        filteredAdverts.push(adverts[i]);
+      }
+
+      if (filteredAdverts.length === 5) {
+        break;
+      }
+    }
+
+    return filteredAdverts;
   };
 })();

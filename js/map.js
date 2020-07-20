@@ -15,7 +15,8 @@
     HEIGHT: 82,
     MIN_Y: 130,
     MAX_Y: 630,
-    MIN_X: 1
+    MIN_X: 0,
+    MAX_X: 1200
   };
 
   var adverts = [];
@@ -63,7 +64,7 @@
         moveEvt.preventDefault();
 
         var minСoordinatesX = Pin.MIN_X - PinMain.WIDTH / 2;
-        var maxСoordinatesX = map.offsetWidth - PinMain.WIDTH / 2;
+        var maxСoordinatesX = Math.ceil(map.offsetWidth - PinMain.WIDTH / 2);
         var minСoordinatesY = Pin.MIN_Y - Pin.HEIGHT;
         var maxСoordinatesY = Pin.MAX_Y - Pin.HEIGHT;
 
@@ -187,8 +188,8 @@
 
     window.form.toggleDisabledElements();
     adForm.reset();
-    mapFilters.reset();
     setDefaultMainPin();
+    mapFilters.reset();
     removePins();
     onCardRemove();
     window.form.removeValidation();

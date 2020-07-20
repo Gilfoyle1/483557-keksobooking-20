@@ -78,7 +78,7 @@
     }
 
     if (card.offer.type !== '') {
-      cardType.textContent = window.data.typesoOffers[card.offer.type].ru;
+      cardType.textContent = window.data.typesOffers[card.offer.type].ru;
     } else {
       cardType.style.display = 'none';
     }

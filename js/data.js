@@ -2,7 +2,7 @@
 
 (function () {
 
-  var typesoOffers = {
+  var typesOffers = {
     palace: {
       ru: 'Дворец',
       minPrice: '10000'
@@ -28,7 +28,7 @@
 
 
   window.data = {
-    typesoOffers: typesoOffers,
+    typesOffers: typesOffers,
     adForm: adForm,
     map: map,
     mapFilters: mapFilters,
