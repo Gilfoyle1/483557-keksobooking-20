@@ -12,6 +12,10 @@
 
     popupFeatures.innerHTML = '';
 
+    if (features.length === 0) {
+      popupFeatures.style.display = 'none';
+    }
+
     features.forEach(function (feature) {
       var featureElement = popupFeature.cloneNode(true);
 
@@ -20,9 +24,6 @@
       popupFeatures.appendChild(featureElement);
     });
 
-    if (features.length === 0) {
-      popupFeatures.style.display = 'none';
-    }
   };
 
   var generatePhotos = function (photos, cardElement) {
@@ -30,6 +31,10 @@
     var popupPhoto = popupPhotos.querySelector('.popup__photo');
 
     popupPhotos.innerHTML = '';
+
+    if (photos.length === 0) {
+      popupPhotos.style.display = 'none';
+    }
 
     photos.forEach(function (photo) {
       var photoElement = popupPhoto.cloneNode(true);
@@ -39,25 +44,6 @@
       popupPhotos.appendChild(photoElement);
     });
 
-    if (photos.length === 0) {
-      popupPhotos.style.display = 'none';
-    }
-  };
-
-  var getNoun = function (number, one, two, five) {
-    number = Math.abs(number);
-    number %= 100;
-    if (number >= 5 && number <= 20) {
-      return number + five;
-    }
-    number %= 10;
-    if (number === 1) {
-      return number + one;
-    }
-    if (number >= 2 && number <= 4) {
-      return number + two;
-    }
-    return number + five;
   };
 
   var generateCard = function (card) {
@@ -99,7 +85,7 @@
     }
 
     if (card.offer.rooms !== '' && card.offer.guests !== '') {
-      cardCapacity.textContent = getNoun(card.offer.rooms, ' комната', ' комнаты', ' комнат') + ' для ' + getNoun(card.offer.guests, ' гостя', ' гостей', ' гостей');
+      cardCapacity.textContent = window.main.getNoun(card.offer.rooms, ' комната', ' комнаты', ' комнат') + ' для ' + window.main.getNoun(card.offer.guests, ' гостя', ' гостей', ' гостей');
     } else {
       cardCapacity.style.display = 'none';
     }
