@@ -18,13 +18,14 @@
     MIN_X: 1
   };
 
+  var adverts = [];
 
-  var map = document.querySelector('.map');
-  var mapPins = map.querySelector('.map__pins');
+  var map = window.data.map;
+  var mapPins = window.data.mapPins;
   var mapPinMain = mapPins.querySelector('.map__pin--main');
-  var mapFilters = map.querySelector('.map__filters');
+  var mapFilters = window.data.mapFilters;
 
-  var adForm = document.querySelector('.ad-form');
+  var adForm = window.data.adForm;
   var adFormReset = adForm.querySelector('.ad-form__reset');
   var avatarSelection = adForm.querySelector('.ad-form-header__input');
   var pictureSelection = adForm.querySelector('.ad-form__input');
@@ -107,16 +108,16 @@
   };
 
   var onPinEnterPress = function (evt) {
-    window.utils.isEnterEvent(evt, activateMap);
+    window.main.isEnterEvent(evt, activateMap);
   };
 
-  var onAdOpen = function (ad) {
+  var onAdOpen = function (advert) {
     onCardRemove();
-    window.card.render(ad);
+    window.card.render(advert);
   };
 
   var onCardEscPress = function (evt) {
-    window.utils.isEscEvent(evt, onCardRemove);
+    window.main.isEscEvent(evt, onCardRemove);
   };
 
   var removePinActive = function () {
@@ -150,39 +151,37 @@
     });
   };
 
-  var onFilterFormChange = window.debounce(function (data) {
+  var onFilterFormChange = window.debounce(function () {
     removePins();
     onCardRemove();
 
-    window.pin.render(data);
+    window.pin.render(adverts);
   });
 
   var onSuccess = function (data) {
-    window.pin.render(data);
+    adverts = data;
 
-    mapFilters.addEventListener('change', function () {
-      onFilterFormChange(data);
-    });
-  };
-
-  var activateMap = function () {
     map.classList.remove('map--faded');
     adForm.classList.remove('ad-form--disabled');
 
     window.form.toggleDisabledElements();
     window.form.getAddressValue(getPinCoordinates());
-    window.backend.load(onSuccess, window.dialog.onError);
+    window.pin.render(data);
     window.form.addValidation();
 
-    mapPinMain.removeEventListener('keyup', onPinEnterPress);
-
-    avatarSelection.addEventListener('change', window.download.onAvatarLoad);
-    pictureSelection.addEventListener('change', window.download.onPhotosLoad);
+    mapFilters.addEventListener('change', onFilterFormChange);
+    avatarSelection.addEventListener('change', window.preview.onAvatarLoad);
+    pictureSelection.addEventListener('change', window.preview.onPhotosLoad);
     adForm.addEventListener('submit', window.form.onSubmit);
-    adFormReset.addEventListener('click', droppingMap);
+    adFormReset.addEventListener('click', onMapDeactivate);
+    mapPinMain.removeEventListener('keyup', onPinEnterPress);
   };
 
-  var droppingMap = function () {
+  var activateMap = function () {
+    window.backend.load(onSuccess, window.dialog.onError);
+  };
+
+  var onMapDeactivate = function () {
     map.classList.add('map--faded');
     adForm.classList.add('ad-form--disabled');
 
@@ -192,13 +191,15 @@
     setDefaultMainPin();
     removePins();
     onCardRemove();
-    window.download.resetPictures();
+    window.form.removeValidation();
+    window.preview.resetPictures();
 
-    avatarSelection.removeEventListener('change', window.download.onAvatarLoad);
-    pictureSelection.removeEventListener('change', window.download.onPhotosLoad);
+    mapFilters.removeEventListener('change', onFilterFormChange);
+    avatarSelection.removeEventListener('change', window.preview.onAvatarLoad);
+    pictureSelection.removeEventListener('change', window.preview.onPhotosLoad);
 
     adForm.removeEventListener('submit', window.form.onSubmit);
-    adFormReset.removeEventListener('click', droppingMap);
+    adFormReset.removeEventListener('click', onMapDeactivate);
   };
 
   window.form.getAddressValue(getPinCoordinates());
@@ -210,6 +211,6 @@
     onAdOpen: onAdOpen,
     onCardRemove: onCardRemove,
     onCardEscPress: onCardEscPress,
-    droppingMap: droppingMap
+    onMapDeactivate: onMapDeactivate
   };
 })();

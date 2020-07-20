@@ -2,7 +2,7 @@
 
 (function () {
 
-  var mapFilters = document.querySelector('.map__filters');
+  var mapFilters = window.data.mapFilters;
   var housingType = mapFilters.querySelector('#housing-type');
   var housingPrice = mapFilters.querySelector('#housing-price');
   var housingRooms = mapFilters.querySelector('#housing-rooms');
@@ -40,8 +40,8 @@
 
   };
 
-  window.filter = function (ads) {
-    return ads.filter(function (element) {
+  window.filter = function (adverts) {
+    return adverts.filter(function (element) {
       return filterHousing(element.offer.type, housingType) &&
         filterHousingPrice(element.offer.price, housingPrice) &&
         filterHousing(element.offer.rooms, housingRooms) &&

@@ -4,10 +4,10 @@
   var FILE_TYPES = ['jpeg', 'jpg', 'png'];
   var SIZE_PHOTOS = 70;
 
-  var adForm = document.querySelector('.ad-form');
-  var pinAvatar = adForm.querySelector('.ad-form-header__preview img');
 
-  var photoRooms = adForm.querySelector('.ad-form__photo');
+  var pinAvatar = window.data.adForm.querySelector('.ad-form-header__preview img');
+
+  var photoRooms = window.data.adForm.querySelector('.ad-form__photo');
 
   var loadPhotos = function (evt, picture) {
     var file = evt.target.files[0];
@@ -48,7 +48,7 @@
     photoRooms.innerHTML = '';
   };
 
-  window.download = {
+  window.preview = {
     onAvatarLoad: onAvatarLoad,
     onPhotosLoad: onPhotosLoad,
     resetPictures: resetPictures
