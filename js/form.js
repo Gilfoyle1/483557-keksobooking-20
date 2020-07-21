@@ -20,9 +20,9 @@
   var formFilters = document.querySelectorAll('.map__filter, fieldset');
   var adFormAddress = adForm.querySelector('input[name=address]');
 
-  var toggleDisabledElements = function () {
-    formFilters.forEach(function (formElement) {
-      formElement.disabled = !formElement.disabled;
+  var togglesDisabled = function () {
+    formFilters.forEach(function (form) {
+      form.disabled = !form.disabled;
     });
   };
 
@@ -87,12 +87,12 @@
     window.backend.push(new FormData(adForm), window.dialog.onSuccess, window.dialog.onError);
   };
 
-  toggleDisabledElements();
+  togglesDisabled();
 
   window.form = {
     addValidation: addValidation,
     removeValidation: removeValidation,
-    toggleDisabledElements: toggleDisabledElements,
+    togglesDisabled: togglesDisabled,
     getAddressValue: getAddressValue,
     onSubmit: onFormSubmit
   };

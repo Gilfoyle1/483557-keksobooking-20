@@ -114,7 +114,7 @@
 
   var onAdOpen = function (advert) {
     onCardRemove();
-    window.card.render(advert);
+    window.cardRender.render(advert);
   };
 
   var onCardEscPress = function (evt) {
@@ -130,12 +130,12 @@
   };
 
   var onCardRemove = function () {
-    var card = map.querySelector('.map__card');
+    var cardRender = map.querySelector('.map__card');
 
-    if (card) {
-      var popupClose = card.querySelector('.popup__close');
+    if (cardRender) {
+      var popupClose = cardRender.querySelector('.popup__close');
 
-      card.remove();
+      cardRender.remove();
       removePinActive();
 
       popupClose.removeEventListener('click', onCardRemove);
@@ -165,7 +165,7 @@
     map.classList.remove('map--faded');
     adForm.classList.remove('ad-form--disabled');
 
-    window.form.toggleDisabledElements();
+    window.form.togglesDisabled();
     window.form.getAddressValue(getPinCoordinates());
     window.pin.render(data);
     window.form.addValidation();
@@ -186,7 +186,7 @@
     map.classList.add('map--faded');
     adForm.classList.add('ad-form--disabled');
 
-    window.form.toggleDisabledElements();
+    window.form.togglesDisabled();
     adForm.reset();
     setDefaultMainPin();
     mapFilters.reset();

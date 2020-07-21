@@ -15,12 +15,12 @@
     if (features.length === 0) {
       popupFeatures.style.display = 'none';
     } else {
-      features.forEach(function (feature) {
-        var featureElement = popupFeature.cloneNode(true);
+      features.forEach(function (featureAdvert) {
+        var feature = popupFeature.cloneNode(true);
 
-        featureElement.className = 'popup__feature popup__feature--' + feature;
+        feature.className = 'popup__feature popup__feature--' + featureAdvert;
 
-        popupFeatures.appendChild(featureElement);
+        popupFeatures.appendChild(feature);
       });
     }
   };
@@ -45,7 +45,7 @@
     }
   };
 
-  var generateCard = function (card) {
+  var generateCard = function (cardRender) {
     var cardElement = cardTemplate.cloneNode(true);
     var popupClose = cardElement.querySelector('.popup__close');
 
@@ -59,56 +59,56 @@
     var cardTime = cardElement.querySelector('.popup__text--time');
     var cardAvatar = cardElement.querySelector('.popup__avatar');
 
-    if (card.offer.title !== '') {
-      cardTitle.textContent = card.offer.title;
+    if (cardRender.offer.title !== '') {
+      cardTitle.textContent = cardRender.offer.title;
     } else {
       cardTitle.style.display = 'none';
     }
 
-    if (card.offer.address !== '') {
-      cardAddress.textContent = card.offer.address;
+    if (cardRender.offer.address !== '') {
+      cardAddress.textContent = cardRender.offer.address;
     } else {
       cardAddress.style.display = 'none';
     }
 
-    if (card.offer.price !== '') {
-      cardPrice.textContent = card.offer.price + '₽/ночь';
+    if (cardRender.offer.price !== '') {
+      cardPrice.textContent = cardRender.offer.price + '₽/ночь';
     } else {
       cardPrice.style.display = 'none';
     }
 
-    if (card.offer.type !== '') {
-      cardType.textContent = window.data.typesOffers[card.offer.type].ru;
+    if (cardRender.offer.type !== '') {
+      cardType.textContent = window.data.typesOffers[cardRender.offer.type].ru;
     } else {
       cardType.style.display = 'none';
     }
 
-    if (card.offer.rooms !== '' && card.offer.guests !== '') {
-      cardCapacity.textContent = window.main.getNoun(card.offer.rooms, ' комната', ' комнаты', ' комнат') + ' для ' + window.main.getNoun(card.offer.guests, ' гостя', ' гостей', ' гостей');
+    if (cardRender.offer.rooms !== '' && cardRender.offer.guests !== '') {
+      cardCapacity.textContent = window.main.getNoun(cardRender.offer.rooms, ' комната', ' комнаты', ' комнат') + ' для ' + window.main.getNoun(cardRender.offer.guests, ' гостя', ' гостей', ' гостей');
     } else {
       cardCapacity.style.display = 'none';
     }
 
-    if (card.offer.checkin !== '' && card.offer.checkout !== '') {
-      cardTime.textContent = 'Заезд после ' + card.offer.checkin + ', выезд до ' + card.offer.checkout;
+    if (cardRender.offer.checkin !== '' && cardRender.offer.checkout !== '') {
+      cardTime.textContent = 'Заезд после ' + cardRender.offer.checkin + ', выезд до ' + cardRender.offer.checkout;
     } else {
       cardTime.style.display = 'none';
     }
 
-    if (card.offer.description !== '') {
-      cardDescription.textContent = card.offer.description;
+    if (cardRender.offer.description !== '') {
+      cardDescription.textContent = cardRender.offer.description;
     } else {
       cardDescription.style.display = 'none';
     }
 
-    if (card.author.avatar !== '') {
-      cardAvatar.src = card.author.avatar;
+    if (cardRender.author.avatar !== '') {
+      cardAvatar.src = cardRender.author.avatar;
     } else {
       cardAvatar.style.display = 'none';
     }
 
-    generateFeatures(card.offer.features, cardElement);
-    generatePhotos(card.offer.photos, cardElement);
+    generateFeatures(cardRender.offer.features, cardElement);
+    generatePhotos(cardRender.offer.photos, cardElement);
 
     popupClose.addEventListener('click', window.map.onCardRemove);
     document.addEventListener('keyup', window.map.onCardEscPress);
@@ -120,7 +120,7 @@
     mapFiltersContainer.insertAdjacentElement('beforebegin', generateCard(pin));
   };
 
-  window.card = {
+  window.cardRender = {
     render: renderCard
   };
 })();

@@ -5,12 +5,12 @@
 
   var onSuccess = function () {
     var successTemplate = document.querySelector('#success').content.querySelector('.success');
-    var successElement = successTemplate.cloneNode(true);
+    var success = successTemplate.cloneNode(true);
 
     var removeDialog = function () {
-      successElement.remove();
+      success.remove();
 
-      successElement.removeEventListener('click', onDialogClick);
+      success.removeEventListener('click', onDialogClick);
       document.removeEventListener('keydown', onDialogPressEsc);
     };
 
@@ -26,20 +26,20 @@
 
     window.map.onMapDeactivate();
 
-    successElement.addEventListener('click', onDialogClick);
+    success.addEventListener('click', onDialogClick);
     document.addEventListener('keydown', onDialogPressEsc);
 
-    main.insertAdjacentElement('afterbegin', successElement);
+    main.insertAdjacentElement('afterbegin', success);
   };
 
   var onError = function (errorMessage) {
     var errorTemplate = document.querySelector('#error').content.querySelector('.error');
-    var errorElement = errorTemplate.cloneNode(true);
+    var error = errorTemplate.cloneNode(true);
 
     var removeDialog = function () {
-      errorElement.remove();
+      error.remove();
 
-      errorElement.removeEventListener('click', onDialogButtonClick);
+      error.removeEventListener('click', onDialogButtonClick);
       document.removeEventListener('keydown', onDialogPressEsc);
     };
 
@@ -53,12 +53,12 @@
       window.main.isEscEvent(evt, removeDialog);
     };
 
-    errorElement.querySelector('.error__message').textContent = errorMessage;
+    error.querySelector('.error__message').textContent = errorMessage;
 
-    errorElement.addEventListener('click', onDialogButtonClick);
+    error.addEventListener('click', onDialogButtonClick);
     document.addEventListener('keydown', onDialogPressEsc);
 
-    main.insertAdjacentElement('afterbegin', errorElement);
+    main.insertAdjacentElement('afterbegin', error);
   };
 
   window.dialog = {

@@ -23,19 +23,19 @@
     }
   };
 
-  var filterHousing = function (dataElement, filterElement) {
-    return filterElement.value === 'any' ? true : dataElement.toString() === filterElement.value;
+  var filterHousing = function (data, filter) {
+    return filter.value === 'any' ? true : data.toString() === filter.value;
   };
 
-  var filterHousingPrice = function (dataElement, filterElement) {
-    return filterElement.value === 'any' ? true : priceToRoom[filterElement.value].min <= dataElement && dataElement < priceToRoom[filterElement.value].max;
+  var filterHousingPrice = function (data, filter) {
+    return filter.value === 'any' ? true : priceToRoom[filter.value].min <= data && data < priceToRoom[filter.value].max;
   };
 
-  var filterHousingCheckbox = function (dataElement) {
+  var filterHousingCheckbox = function (data) {
     var housingCheckbox = mapFilters.querySelectorAll('.map__checkbox:checked');
 
-    return Array.from(housingCheckbox).every(function (feature) {
-      return dataElement.indexOf(feature.value) >= 0;
+    return Array.from(housingCheckbox).every(function (featureAdvert) {
+      return data.indexOf(featureAdvert.value) >= 0;
     });
 
   };
